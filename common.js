@@ -40,7 +40,7 @@ function resetContainer() {
     const screenW = document.documentElement.clientWidth || document.body.clientWidth;
 
     const container = document.getElementsByClassName('container')[0];
-
+    const resView = document.getElementById('resView');
     const isMb = isMobile();
 
     console.log(`isMobole ----` + isMb);
@@ -48,6 +48,11 @@ function resetContainer() {
     if (isMb == false) {// pc or ipad
         container.style.width = "375px";
         container.style.height = '667px';
+
+        // resView.style.width = "375px";
+        // resView.style.height = '667px';
+
+
         container.style.top = ((screenH - 667) / 2) +  "px";
         console.log(container.style.top);
         container.backgroundColor = 'red';

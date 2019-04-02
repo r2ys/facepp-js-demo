@@ -59,7 +59,27 @@
         width: 90%;
         height: 200px;
     }
-
+    #resView{
+        height: 100%;
+        width: 100%;
+        background: rgba(0, 0, 0, 0.5);
+        z-index: 9999;
+        position: absolute;
+        top: 0;
+        left: 0;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+    #res{
+        width: 80%;
+        height: 90%;
+        background:#FFF;
+        overflow: auto;
+        text-align: left;
+        padding: 20px;
+        max-width: 600px;
+    }
 </style>
 
 <body>
@@ -75,7 +95,10 @@
 
     <div id="result"></div>
 
-    <textarea id="text" readonly="readonly"></textarea>
+    <!-- <textarea id="text" readonly="readonly"></textarea> -->
+    <div id="resView" style="display:none">
+        <pre id="res" ></pre>
+    </div>
 </div>
 </body>
 
@@ -153,8 +176,8 @@
         if(left_file == null || right_file == null){
             return;
         }
-        let textView = document.getElementById('text');
-        textView.innerText = '';
+        // let textView = document.getElementById('text');
+        // textView.innerText = '';
         const param = {"image_file1":left_file,"image_file2":right_file};
         this.facepp.compareFace(param,handleSuccess,handleError);
     }
@@ -182,8 +205,12 @@
         let resultView = document.getElementById('result');
         resultView.innerText = result;
 
-        let textView = document.getElementById('text');
-        textView.innerText = JSON.stringify(e,null,"\t");;
+        // let textView = document.getElementById('text');
+        // textView.innerText = JSON.stringify(e,null,"\t");;
+        let resDom = document.getElementById('res')        
+        resDom.innerText = JSON.stringify(e,null,2)
+        
+        document.getElementById('resView').style.display = 'flex'
     }
 
     //失败的回调
@@ -191,6 +218,19 @@
         console.log(e);
         let textView = document.getElementById('text');
         textView.innerText = JSON.stringify(e,null,"\t");
+    }
+
+    document.onkeydown=function(e){	//对整个页面文档监听
+        var keyNum=window.event ? e.keyCode :e.which;		//获取被按下的键值
+        //判断如果用户按下了回车键（keycody=13）
+        if(keyNum==27){
+            document.getElementById('resView').style.display = 'none'
+        }
+
+        //判断如果用户按下了空格键(keycode=32)，
+        if(keyNum==27){
+            document.getElementById('resView').style.display = 'none'
+        }
     }
 </script>
 </html>
